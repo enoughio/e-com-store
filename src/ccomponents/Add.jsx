@@ -3,8 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { productContext } from "../utils/context";
 
 const Add = () => {
-  const nevigate = useNavigate()
-  const [product, setproduct] = useContext(productContext)
+  const nevigate = useNavigate();
+  const [product, setproduct] = useContext(productContext);
   const [title, settitle] = useState(null);
   const [catagory, setCatagory] = useState(null);
   const [price, setPrice] = useState(null);
@@ -12,26 +12,29 @@ const Add = () => {
   const [image, setimage] = useState(null);
 
   const handelSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const newProduct = {
+      id: product.length + 1,
       title,
       catagory,
       price,
       image,
-      discription
-    }
+      discription,
+    };
 
-    // setproduct()
-    console.log(product)
-    // localStorage.setItem('products', JSON.stringify([...product, newProduct]))
-    console.log(product);
+    setproduct([...product, newProduct]); // Update the context state
+    localStorage.setItem("products", JSON.stringify([...product, newProduct])); // Save to localStorage
+
     nevigate(-1);
-  }
+  };
 
   return (
     <div className="flex bg-zinc-400 w-screen h-screen justify-center items-center">
-      <form onSubmit={(e)=>handelSubmit(e)} className="w-[60%] flex flex-col ">
+      <form
+        onSubmit={(e) => handelSubmit(e)}
+        className="w-[60%] flex flex-col "
+      >
         <NavLink
           to="/"
           className="p-3 text-3xl font-bold text-sky-400"
@@ -62,7 +65,7 @@ const Add = () => {
           <input
             type="text"
             name="catagory"
-          required
+            required
             onChange={(e) => setCatagory(e.target.value)}
             placeholder="catagory"
             className=" w-[48%] bg-zinc-300 rounded-md  px-2  bg-zinc-300 text-2xl h-[3vw] mb-4"

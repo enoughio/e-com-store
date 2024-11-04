@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Nav from "./Nav";
 import { Link, useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import Loading from "./Loading";
+import { productContext } from "../utils/context";
 
 function Details() {
-  const [products, setproducts] = useContext(productContext);
+  const [product, setproduct] = useContext(productContext);
   const [detail, setdetail] = useState({});
   const [loading, setloading] = useState(true)
   const { id } = useParams();
@@ -24,7 +25,12 @@ function Details() {
 
   useEffect(() => {
     // getDetails();
-    setdetail(products.filter((p) => p.id == id))
+    console.log(product)
+    // setdetail(product.filter((p) => p.id == id)[0])
+    const foundProduct = product.find((p) => p.id === parseInt(id)); // Use find instead of filter, and ensure type comparison
+    if (foundProduct) {
+      setdetail(foundProduct);
+    }
     setloading(false); //
   }, []);
 
